@@ -1,0 +1,14 @@
+# Blender 4.2+ 扩展（extension）清单。
+# 用 Blender 的「从磁盘安装」选择本文件所在目录即可；
+# 旧版 Blender（3.6–4.1）会忽略它，改用 __init__.py 里的 bl_info。
+schema_version = "1.0.0"
+id = "dsh_blender_bridge"
+version = "0.1.0"
+name = "DSH Blender Bridge"
+tagline = "Let DeepSeek Harness (DSH) agents model in Blender"
+maintainer = "dsh-blender-studio contributors"
+type = "addon"
+blender_version_min = "3.6.0"
+license = ["SPDX:MIT"]
+tags = ["Interface", "Mesh", "Object"]
+website = "https://github.com/OWNER/dsh-blender-studio"

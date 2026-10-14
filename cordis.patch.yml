@@ -1,0 +1,14 @@
+# dsh-blender-studio bundle layer.
+#
+# Installing this package (for example `dsh plugin add github:<owner>/dsh-blender-studio`,
+# or the local install.ps1 / install.sh shipped in this repository) applies the row
+# below automatically, so the plugin needs no manual cordis.patch.yml edit.
+# Later layers override these rows by id.
+
+- insert:
+    - id: blender-studio
+      name: dsh-blender-studio
+      config:
+        enabled: true
+        host: 127.0.0.1
+        port: 9880

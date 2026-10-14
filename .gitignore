@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+dist/
+.DS_Store
+Thumbs.db
+*.blend1
+*.blend2
+.blender-e2e/
+outputs/
+blender-outputs/

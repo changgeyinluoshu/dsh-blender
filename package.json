@@ -1,0 +1,67 @@
+{
+  "name": "dsh-blender-studio",
+  "version": "0.1.0",
+  "description": "Give DeepSeek Harness agents live control of Blender: create and edit meshes, apply modifiers and booleans, build materials, render previews and export models (GLB/FBX/OBJ/STL) straight from the chat. Ships the Blender-side bridge add-on.",
+  "type": "module",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "blender",
+    "3d",
+    "modeling",
+    "mesh",
+    "mcp"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "lib",
+    "addon",
+    "test/hooks.mjs",
+    "test/verify-load.mjs",
+    "cordis.patch.yml",
+    "install.ps1",
+    "install.sh",
+    "uninstall.ps1",
+    "uninstall.sh",
+    "README.md",
+    "README.en.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "icon.svg",
+    "!addon/**/__pycache__",
+    "!addon/**/*.pyc"
+  ],
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "scripts": {
+    "check": "node scripts/check-syntax.mjs",
+    "test": "node --test --test-isolation=none \"test/*.test.mjs\"",
+    "test:all": "npm run check && npm test && npm run verify:load && npm run test:addon && npm run test:blender",
+    "verify:load": "node test/verify-load.mjs",
+    "test:addon": "node scripts/test-addon.mjs",
+    "test:blender": "node test/e2e-blender.mjs",
+    "pack:addon": "node scripts/pack-addon.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OWNER/dsh-blender-studio.git"
+  },
+  "homepage": "https://github.com/OWNER/dsh-blender-studio",
+  "bugs": {
+    "url": "https://github.com/OWNER/dsh-blender-studio/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
