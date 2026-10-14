@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Commit and push this repository to GitHub.
 
@@ -32,8 +32,16 @@ param(
 $ErrorActionPreference = 'Stop'
 
 # 脚本位于 scripts/ 下，仓库根是它的上一级。
-$Root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-if (-not (Test-Path -LiteralPath (Join-Path $Root 'package.json'))) { $Root = (Get-Location).Path }
+# 优先用 $PSScriptRoot：某些调用方式（powershell -File <相对路径>）下
+# $MyInvocation.MyCommand.Path 会为空，嵌套 Split-Path 会直接报参数为 null。
+$ScriptDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($ScriptDir)) {
+  $CommandPath = $MyInvocation.MyCommand.Path
+  if (-not [string]::IsNullOrEmpty($CommandPath)) { $ScriptDir = Split-Path -Parent $CommandPath }
+}
+if ([string]::IsNullOrEmpty($ScriptDir)) { $ScriptDir = (Get-Location).Path }
+$Root = Split-Path -Parent $ScriptDir
+if ([string]::IsNullOrEmpty($Root) -or -not (Test-Path -LiteralPath (Join-Path $Root 'package.json'))) { $Root = (Get-Location).Path }
 Set-Location -LiteralPath $Root
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'git is required.' }
@@ -62,13 +70,22 @@ if ((git remote) -contains 'origin') { git remote set-url origin $plain } else {
 Write-Host "  [OK] remote origin -> $plain" -ForegroundColor Green
 
 # --- 3. push ---------------------------------------------------------------
+# git 把进度和错误都写到 stderr；在 $ErrorActionPreference='Stop' 下 2>&1 管道会把
+# 它当成终止性错误，导致脚本在第一次失败时就退出、来不及切 OpenSSL 重试。
 function Invoke-GitPush([string]$url, [string]$sslBackend) {
-  $gitArgs = @()
-  if ($sslBackend) { $gitArgs += @('-c', "http.sslBackend=$sslBackend") }
-  $gitArgs += @('push', $url, ($Branch + ':' + $Branch))
-  if ($ForcePush) { $gitArgs += '--force' }
-  & git @gitArgs 2>&1 | ForEach-Object { Write-Host ('    ' + $_) }
-  return $LASTEXITCODE
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $gitArgs = @()
+    if ($sslBackend) { $gitArgs += @('-c', "http.sslBackend=$sslBackend") }
+    $gitArgs += @('push', $url, ($Branch + ':' + $Branch))
+    if ($ForcePush) { $gitArgs += '--force' }
+    $output = & git @gitArgs 2>&1
+    $output | ForEach-Object { Write-Host ('    ' + $_) }
+    return $LASTEXITCODE
+  } finally {
+    $ErrorActionPreference = $previousPreference
+  }
 }
 
 $pushUrl = $plain

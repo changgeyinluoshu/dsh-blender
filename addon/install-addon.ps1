@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Copy the bundled Blender add-on (dsh_blender_bridge) into Blender's user add-on folder.
 
@@ -96,7 +96,11 @@ Write-Ok "Add-on installed: $targetPlugin"
 
 if ($Enable -and $exe) {
   $expr = "import addon_utils,bpy;addon_utils.enable('$AddonName',default_set=True);bpy.ops.wm.save_userpref();print('DSH_ADDON_ENABLED')"
+  # Blender 会把日志写到 stderr，Stop 模式下 2>&1 管道会误判成致命错误。
+  $previousPreference = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
   $output = & $exe --background --python-expr $expr 2>&1 | Out-String
+  $ErrorActionPreference = $previousPreference
   if ($output -match 'DSH_ADDON_ENABLED') { Write-Ok 'Add-on enabled in Blender user preferences' }
   else { Write-Note 'Could not confirm the automatic enable - tick it manually in Blender' }
 }

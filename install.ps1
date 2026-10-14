@@ -31,7 +31,12 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$RepoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot = $PSScriptRoot
+if ([string]::IsNullOrEmpty($RepoRoot)) {
+  $CommandPath = $MyInvocation.MyCommand.Path
+  if (-not [string]::IsNullOrEmpty($CommandPath)) { $RepoRoot = Split-Path -Parent $CommandPath }
+}
+if ([string]::IsNullOrEmpty($RepoRoot)) { $RepoRoot = (Get-Location).Path }
 $PluginName = 'dsh-blender-studio'
 $Begin = '# >>> dsh-blender-studio managed block >>>'
 $End = '# <<< dsh-blender-studio managed block <<<'

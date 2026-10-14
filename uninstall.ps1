@@ -19,6 +19,12 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $PluginName = 'dsh-blender-studio'
+$ScriptDir = $PSScriptRoot
+if ([string]::IsNullOrEmpty($ScriptDir)) {
+  $CommandPath = $MyInvocation.MyCommand.Path
+  if (-not [string]::IsNullOrEmpty($CommandPath)) { $ScriptDir = Split-Path -Parent $CommandPath }
+}
+if ([string]::IsNullOrEmpty($ScriptDir)) { $ScriptDir = (Get-Location).Path }
 $Begin = '# >>> dsh-blender-studio managed block >>>'
 $End = '# <<< dsh-blender-studio managed block <<<'
 
@@ -65,7 +71,7 @@ if (Test-Path -LiteralPath $link) {
 }
 
 if ($RemoveAddon) {
-  $addonScript = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) 'addon\uninstall-addon.ps1'
+  $addonScript = Join-Path $ScriptDir 'addon\uninstall-addon.ps1'
   if (Test-Path -LiteralPath $addonScript) { & $addonScript }
   else { Write-Host '  [!] addon/uninstall-addon.ps1 not found' -ForegroundColor Yellow }
 }
