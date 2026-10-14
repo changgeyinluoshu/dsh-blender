@@ -54,7 +54,7 @@
 ### 方式 A：一条命令（推荐）
 
 ```bash
-git clone https://github.com/<你的用户名>/dsh-blender-studio.git
+git clone https://github.com/changgeyinluoshu/dsh-blender.git
 cd dsh-blender-studio
 
 # Windows（PowerShell）
@@ -73,7 +73,7 @@ cd dsh-blender-studio
 ### 方式 B：DSH 插件安装器
 
 ```bash
-dsh plugin add github:<你的用户名>/dsh-blender-studio
+dsh plugin add github:changgeyinluoshu/dsh-blender
 ```
 
 包内自带 `cordis.patch.yml`，安装器会按 `dsh.bundle.patch` 自动接线，不需要手改配置。

@@ -11,4 +11,4 @@ type = "addon"
 blender_version_min = "3.6.0"
 license = ["SPDX:MIT"]
 tags = ["Interface", "Mesh", "Object"]
-website = "https://github.com/OWNER/dsh-blender-studio"
+website = "https://github.com/changgeyinluoshu/dsh-blender"

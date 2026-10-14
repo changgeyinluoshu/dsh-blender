@@ -15,7 +15,7 @@ No cloud service, no npm dependencies, no Python packages: the DSH side is plain
 ## Install
 
 ```bash
-git clone https://github.com/<you>/dsh-blender-studio.git
+git clone https://github.com/changgeyinluoshu/dsh-blender.git
 cd dsh-blender-studio
 ./install.ps1          # Windows
 ./install.sh           # macOS / Linux
@@ -23,7 +23,7 @@ cd dsh-blender-studio
 
 The installer is idempotent and reversible: it links the repository into `<Profile>/node_modules/dsh-blender-studio`, writes a managed block into `<Profile>/cordis.patch.yml` (with a backup), and copies the Blender add-on into Blender's user add-on folder (`-SkipAddon` / `SKIP_ADDON=1` to skip).
 
-Alternative: `dsh plugin add github:<you>/dsh-blender-studio` — the package ships its own bundle patch.
+Alternative: `dsh plugin add github:changgeyinluoshu/dsh-blender` — the package ships its own bundle patch.
 
 ### Blender side
 

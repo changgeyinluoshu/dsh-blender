@@ -53,11 +53,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OWNER/dsh-blender-studio.git"
+    "url": "git+https://github.com/changgeyinluoshu/dsh-blender.git"
   },
-  "homepage": "https://github.com/OWNER/dsh-blender-studio",
+  "homepage": "https://github.com/changgeyinluoshu/dsh-blender",
   "bugs": {
-    "url": "https://github.com/OWNER/dsh-blender-studio/issues"
+    "url": "https://github.com/changgeyinluoshu/dsh-blender/issues"
   },
   "dsh": {
     "bundle": {

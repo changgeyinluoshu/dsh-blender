@@ -15,7 +15,7 @@ bl_info = {
     "blender": (3, 6, 0),
     "location": "View3D > Sidebar > DSH",
     "description": "Let DeepSeek Harness (DSH) agents model in Blender: primitives, mesh edits, modifiers, booleans, materials, renders and exports.",
-    "doc_url": "https://github.com/OWNER/dsh-blender-studio",
+    "doc_url": "https://github.com/changgeyinluoshu/dsh-blender",
     "category": "Interface",
 }
 
